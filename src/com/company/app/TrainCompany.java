@@ -12,23 +12,30 @@ import java.util.List;
 
 
 public class TrainCompany {
-    private List<Train> trains = new ArrayList<Train>();
+    private List<Freight> freightTrains = new ArrayList<>();
     private List<IC> ICtrains = new ArrayList<>();
-    private List<Passenger> passangerTrains = new ArrayList<>();
+    private List<Passenger> passangerTrains = new ArrayList<Passenger>();
 
      private float expenses;
      private float income;
      private float profit;
      private final int MINPASSANGERS = 115;
      private final int MAXPASSANGERS = 250;
-     private final int PASSENGERBLITZCHANCE = 10;
      private final int ICBLITZCHANCE = 8;
-     private final int CHANCEOFFREIGHTTOGOFOREIGN = 35;
      private final int DAYSINAMONTH =  30;
 
 
      public void addTrain(Train train){
-        trains.add(train);
+         if(train instanceof  IC){
+             ICtrains.add((IC) train);
+             expenses +=  train.getCost();
+         }else if(train instanceof Passenger){
+             passangerTrains.add((Passenger) train);
+             expenses += train.getCost();
+         }else{
+             freightTrains.add((Freight) train);
+             expenses += train.getCost();
+         }
     }
 
     public void calculateMonthlyICRevenue(){
@@ -72,34 +79,31 @@ public class TrainCompany {
     }
 
      public void calculateMonthlyFreightRevenue(){
-         for (Train train: trains) {
-             if(train instanceof Freight){
+         for (Freight train: freightTrains) {
                  float monthlyRevenue = 550;
                  if(RandomUtil.generateRandomNumberBetween(1,100)<35)
                      monthlyRevenue += 110;
-                    profit += monthlyRevenue;
-             }
+                    income += monthlyRevenue;
          }
     }
 
-    public void addICTrainsToIcList(){
-        for (Train train : trains) {
-            if(train instanceof  IC){
-                ICtrains.add((IC)train);
-            }
-        }
+    public void calculateIncome(){
+        calculateMonthlyFreightRevenue();
+        calculateMonthlyICRevenue();
+        calculateMonthlyPassengerRevenue();
     }
 
-    public void addPassengerTrainsToPassengerList(){
-        for (Train train : trains) {
-            if(train instanceof Passenger){
-                passangerTrains.add((Passenger)train);
-            }
-        }
+
+    public float getExpenses() {
+        return expenses;
     }
 
-    public float getProfit() {
-        return profit;
+    public float getIncome() {
+        return income;
+    }
+
+    public double calculateProfit(){
+         return this.profit = income -expenses;
     }
 
     @Override

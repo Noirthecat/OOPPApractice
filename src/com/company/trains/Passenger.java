@@ -2,9 +2,10 @@ package com.company.trains;
 
 public class Passenger extends Train {
     private final float ticketPrice;
+    private final int COST;
 
     public Passenger() {
-        this.cost = 1000;
+        this.COST = 1000;
         this.ticketPrice = (float) 1.50;
     }
 
@@ -12,4 +13,8 @@ public class Passenger extends Train {
         return ticketPrice;
     }
 
+    @Override
+    public int getCost() {
+        return COST;
+    }
 }
