@@ -15,6 +15,8 @@ public class Main {
 	trainCompany.addTrain(new Freight());
 	trainCompany.addTrain(new Freight());
 
+	    
+	//ez mire jo?, siman addnal hoza adod ahhoz a listahoz is, ha nem akarsz filterezni.:/
 	trainCompany.addICTrainsToIcList();
 	trainCompany.addPassengerTrainsToPassengerList();
 
